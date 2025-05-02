@@ -1,7 +1,6 @@
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -37,6 +36,5 @@ fun YouTubePlayerScreen(videoId: String, modifier: Modifier = Modifier) {
             modifier = modifier
         )
     }
-
 
 }
