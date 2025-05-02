@@ -19,6 +19,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,7 +30,19 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "https://raw.githubusercontent.com/mdrafsanbiswas/babyTube/refs/heads/dev/app/src/main/java/com/"
+            )
         }
+
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://raw.githubusercontent.com/mdrafsanbiswas/babyTube/refs/heads/dev/app/src/main/java/com/\"")
+        }
+
+
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -41,6 +57,8 @@ android {
 }
 
 dependencies {
+
+    implementation (libs.kotlin.stdlib)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -70,10 +88,8 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.hilt.android)
 
     implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
-    implementation(libs.hilt.android)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
