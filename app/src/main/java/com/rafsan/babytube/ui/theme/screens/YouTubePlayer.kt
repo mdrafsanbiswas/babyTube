@@ -1,6 +1,8 @@
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -10,12 +12,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import androidx.lifecycle.LifecycleOwner
 
 @Composable
-fun YouTubePlayerScreen(videoId: String, modifier: Modifier = Modifier) {
+fun YouTubePlayerScreen(videoId: String) {
     val lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
 
     Column {
 
         AndroidView(
+            modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
             factory = { context ->
                 val playerView = YouTubePlayerView(context).apply {
                     layoutParams = FrameLayout.LayoutParams(
@@ -32,8 +35,7 @@ fun YouTubePlayerScreen(videoId: String, modifier: Modifier = Modifier) {
                 })
 
                 playerView
-            },
-            modifier = modifier
+            }
         )
     }
 

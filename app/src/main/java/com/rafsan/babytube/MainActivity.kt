@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,8 +25,10 @@ import com.rafsan.babytube.ui.theme.BabyTubeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.google.gson.Gson
 import com.rafsan.babytube.data.DataState
 import com.rafsan.babytube.data.VideoItem
+import com.rafsan.babytube.ui.theme.screens.WebScreen
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -85,21 +88,33 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 VideoScreenList(
                                     items = videoList,
-                                    onItemSelected = { videoId ->
-                                        navController.navigate("video_detail/$videoId")
+                                    onItemSelected = { item ->
+                                        val data = Gson().toJson(item)
+                                        navController.navigate("video_detail/$data")
                                     },
-                                    modifier = Modifier.padding(innerPadding)
                                 )
                             }
                         }
 
                         composable(
-                            route = "video_detail/{videoId}",
+                            route = "video_detail/{data}",
                         ) { backStackEntry ->
-                            val videoId = backStackEntry.arguments?.getString("videoId")
-                            YouTubePlayerScreen(
-                                videoId = videoId?:"",
-                            )
+                            val rawData = backStackEntry.arguments?.getString("data")
+                            val data = Gson().fromJson(rawData, VideoItem::class.java)
+
+                            when(data.type) {
+                                "youtube" -> {
+                                    YouTubePlayerScreen(
+                                        videoId = data.videoId,
+                                    )
+                                }
+
+                                "webview" -> {
+                                    WebScreen(data.url, onBackPressed = { navController.popBackStack()})
+                                }
+                            }
+
+
                         }
                     }
                 }

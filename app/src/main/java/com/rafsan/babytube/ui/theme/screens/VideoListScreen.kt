@@ -15,11 +15,10 @@ import com.rafsan.babytube.ui.theme.screens.VideoThumbnailItem
 fun VideoScreenList(
     items: List<VideoItem>?,
     columns: Int = 3,
-    modifier: Modifier = Modifier,
-    onItemSelected: (String) -> Unit
+    onItemSelected: (VideoItem?) -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
-    var selectedItem by remember { mutableStateOf("") }
+    var selectedItem : VideoItem? by remember { mutableStateOf(null) }
 
     val gridState = rememberLazyGridState()
 
@@ -70,7 +69,7 @@ fun VideoScreenList(
                         }
 
                         Key.Enter -> {
-                            selectedItem = items[selectedIndex].videoId
+                            selectedItem = items[selectedIndex]
                             onItemSelected(selectedItem)
                             Log.d("check_index_enter", "$selectedItem, $selectedIndex")
                             true
@@ -96,7 +95,7 @@ fun VideoScreenList(
                 columns = columns,
                 onItemSelected = {
                     selectedIndex = index
-                    onItemSelected(item.videoId)
+                    onItemSelected(item)
                 }
             )
         }
