@@ -14,6 +14,8 @@ object NetworkCallHandler {
                 emit(networkCall)
             } catch (e: Exception) {
                 e.printStackTrace()
+                val errorState= DataState.Error(e.message?:"")
+                emit(errorState)
             }
         }
 }

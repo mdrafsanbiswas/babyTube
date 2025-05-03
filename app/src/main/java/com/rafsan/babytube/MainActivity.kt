@@ -60,6 +60,10 @@ class MainActivity : ComponentActivity() {
                            videoList = it.data
                            loadingState = false
                         }
+                        is DataState.Error -> {
+                            loadingState = false
+                        }
+
                         null -> {
                             loadingState = false
                         }
