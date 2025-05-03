@@ -1,7 +1,9 @@
 package com.rafsan.babytube.di
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.rafsan.babytube.BuildConfig
+import com.rafsan.babytube.network.VideoApiInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +35,14 @@ object AppDiModule {
             .addInterceptor(logging)
             .build()
     }
+
+
+    @Provides
+    @Singleton
+    fun provideVideoApiInterface(retrofit: Retrofit): VideoApiInterface =
+        retrofit.create(VideoApiInterface::class.java)
+
+    @Provides
+    fun provideGson(): Gson = GsonBuilder().create()
 
 }
