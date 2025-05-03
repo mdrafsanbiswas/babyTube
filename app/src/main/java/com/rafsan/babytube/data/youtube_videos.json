@@ -17,25 +17,11 @@
     "thumbnail": "https://i.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg",
     "url":""
   },
-
-
   {
     "type": "webview",
     "videoId": "",
     "thumbnail": "https://cdn.jugantor.com/assets/news_photos/2023/02/11/image-643857-1676070356.jpg",
     "url":"https://www.jugantor.com/"
-  },
-  {
-    "type": "webview",
-    "videoId": "",
-    "thumbnail": "https://cdn.jugantor.com/assets/news_photos/2023/02/11/image-643857-1676070356.jpg",
-    "url":"https://www.jugantor.com/"
-  },
-  {
-    "type": "webview",
-    "videoId": "",
-    "thumbnail": "https://newspapersonline.com/pressimages/242.md.jpg",
-    "url":"https://mzamin.com/"
   },
   {
     "type": "webview",
@@ -49,6 +35,4 @@
     "thumbnail": "https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2024/10/18/amar_desh.jpg",
     "url":"https://dailyamardesh.com/"
   }
-
-
 ]

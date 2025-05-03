@@ -100,4 +100,8 @@ fun VideoScreenList(
             )
         }
     }
+
+    LaunchedEffect(selectedIndex) {
+        gridState.animateScrollToItem(selectedIndex)
+    }
 }
