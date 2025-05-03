@@ -17,8 +17,6 @@
     "thumbnail": "https://i.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg",
     "url":""
   },
-
-
   {
     "type": "webview",
     "videoId": "",
@@ -49,6 +47,4 @@
     "thumbnail": "https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2024/10/18/amar_desh.jpg",
     "url":"https://dailyamardesh.com/"
   }
-
-
 ]
