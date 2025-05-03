@@ -1,4 +1,4 @@
-package com.rafsan.babytube.ui.theme.screens
+package com.rafsan.babytube.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -18,7 +18,7 @@ import coil.compose.AsyncImage
 import com.rafsan.babytube.data.VideoItem
 
 @Composable
-fun VideoThumbnailItem(data: VideoItem, isSelected: Boolean, onItemSelected: () -> Unit, columns: Int) {
+fun ThumbnailItem(data: VideoItem, isSelected: Boolean, onItemSelected: () -> Unit, columns: Int) {
 
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val itemWidth = screenWidth / columns

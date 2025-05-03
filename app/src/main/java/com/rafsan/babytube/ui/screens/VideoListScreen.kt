@@ -9,7 +9,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.unit.dp
 import com.rafsan.babytube.data.VideoItem
-import com.rafsan.babytube.ui.theme.screens.VideoThumbnailItem
+import com.rafsan.babytube.ui.components.ThumbnailItem
 
 @Composable
 fun VideoScreenList(
@@ -89,7 +89,7 @@ fun VideoScreenList(
     ) {
         itemsIndexed(items?: emptyList()) { index, item ->
 
-            VideoThumbnailItem(
+            ThumbnailItem(
                 data = item,
                 isSelected = index == selectedIndex,
                 columns = columns,

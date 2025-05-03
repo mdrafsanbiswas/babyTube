@@ -1,4 +1,4 @@
-package com.rafsan.babytube.ui.theme.screens
+package com.rafsan.babytube.ui.screens
 
 import android.view.KeyEvent
 import android.view.View
@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
-fun WebScreen(url: String, onBackPressed: () -> Unit) {
+fun WebViewScreen(url: String, onBackPressed: () -> Unit) {
     val webView = rememberWebViewWithHistory()
     var canGoBack by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
