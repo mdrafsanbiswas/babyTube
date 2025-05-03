@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,8 +22,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rafsan.babytube.ui.theme.BabyTubeTheme
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.rafsan.babytube.data.DataState
 import com.rafsan.babytube.data.VideoItem
@@ -89,20 +86,18 @@ class MainActivity : ComponentActivity() {
                                 VideoScreenList(
                                     items = videoList,
                                     onItemSelected = { item ->
-                                        val data = Gson().toJson(item)
-                                        navController.navigate("video_detail/$data")
+                                        mainViewModel.onSelect(item)
+                                        navController.navigate("video_detail")
                                     },
                                 )
                             }
                         }
 
                         composable(
-                            route = "video_detail/{data}",
+                            route = "video_detail",
                         ) { backStackEntry ->
-                            val rawData = backStackEntry.arguments?.getString("data")
-                            val data = Gson().fromJson(rawData, VideoItem::class.java)
-
-                            when(data.type) {
+                            val data = mainViewModel.getSelectedItem()
+                            when(data?.type) {
                                 "youtube" -> {
                                     YouTubePlayerScreen(
                                         videoId = data.videoId,

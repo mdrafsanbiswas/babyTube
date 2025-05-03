@@ -1,6 +1,5 @@
 package com.rafsan.babytube
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafsan.babytube.data.DataState
@@ -21,11 +20,21 @@ class MainViewModel @Inject constructor(
    private val _videoList = MutableStateFlow<DataState<List<VideoItem>>?>(null)
    val videoList = _videoList.asStateFlow()
 
+   private var selectedItem: VideoItem? = null
+
     fun fetchVideoList() {
        viewModelScope.launch {
            repository.getVideos().collectLatest {
                _videoList.value = it
            }
        }
+    }
+
+    fun onSelect(item: VideoItem?) {
+        selectedItem = item
+    }
+
+    fun getSelectedItem(): VideoItem? {
+        return selectedItem
     }
 }

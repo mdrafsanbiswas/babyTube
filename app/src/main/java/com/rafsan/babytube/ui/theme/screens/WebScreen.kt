@@ -1,14 +1,21 @@
 package com.rafsan.babytube.ui.theme.screens
 
+import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.focusable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 
@@ -16,7 +23,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 fun WebScreen(url: String, onBackPressed: () -> Unit) {
     val webView = rememberWebViewWithHistory()
     var canGoBack by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
 
+    // Handle back button press
     BackHandler(enabled = canGoBack) {
         if (webView.canGoBack()) {
             webView.goBack()
@@ -25,15 +34,46 @@ fun WebScreen(url: String, onBackPressed: () -> Unit) {
         }
     }
 
+    DisposableEffect(Unit) {
+        focusRequester.requestFocus()
+        onDispose { }
+    }
+
     WebViewWithHistory(
         url = url,
         webView = webView,
+        modifier = Modifier
+            .focusRequester(focusRequester)
+            .focusable()
+            .onKeyEvent { keyEvent ->
+                when (keyEvent.nativeKeyEvent.keyCode) {
+                    KeyEvent.KEYCODE_DPAD_UP -> {
+                        webView.scrollBy(0, -100)
+                        true
+                    }
+                    KeyEvent.KEYCODE_DPAD_DOWN -> {
+                        webView.scrollBy(0, 100)
+                        true
+                    }
+                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+                        webView.scrollBy(-100, 0)
+                        true
+                    }
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                        webView.scrollBy(100, 0)
+                        true
+                    }
+                    else -> false
+                }
+            },
         onHistoryUpdated = { canGoBack = it },
         onPageStarted = { currentUrl ->
             println("Page started loading: $currentUrl")
         },
         onPageFinished = { currentUrl ->
             println("Page finished loading: $currentUrl")
+            // Re-request focus after page loads to ensure continued scrolling
+            focusRequester.requestFocus()
         },
         onError = {
             println("Error loading page")
@@ -46,9 +86,19 @@ fun rememberWebViewWithHistory(): WebView {
     val context = LocalContext.current
     return remember {
         WebView(context).apply {
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
-            settings.setSupportMultipleWindows(false)
+            settings.apply {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                setSupportMultipleWindows(false)
+                useWideViewPort = true
+                loadWithOverviewMode = true
+            }
+
+            // Enhanced focus and scrolling settings
+            isFocusable = true
+            isFocusableInTouchMode = true
+            isScrollContainer = true
+            overScrollMode = View.OVER_SCROLL_ALWAYS
         }
     }
 }
