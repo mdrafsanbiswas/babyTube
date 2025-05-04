@@ -31,11 +31,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField(
-                "String",
-                "BASE_URL",
-                "https://raw.githubusercontent.com/mdrafsanbiswas/babyTube/refs/heads/dev/app/src/main/java/com/"
-            )
+            buildConfigField("String", "BASE_URL", "\"https://raw.githubusercontent.com/mdrafsanbiswas/babyTube/refs/heads/dev/app/src/main/java/com/\"")
         }
 
         debug {
